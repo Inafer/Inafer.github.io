@@ -1,10 +1,169 @@
-<script>
-    var angka_A = prompt("nilai pertama");
-    var angka_B = prompt("nilai kedua");
-    var hasil = parseInt(angka_A) % parseInt(angka_B);
-   alert(hasil);
-</script> 
-<center><a href="index.html">KEMBALI</a></center>
-<style>
-    body{background-color: 333;}
-</style>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Kalkulator Sederhana</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #333;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            position: relative;
+        }
+        .calculator-container {
+            display: flex;
+        }
+        .calculator {
+            width: 400px; /* Lebar diperbesar */
+            padding: 10px;
+            background-color: #444;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            text-align: center; /* Pusat teks dalam kotak */
+            position: relative; /* Menambahkan posisi relatif */
+            margin-right: 10px; /* Menambahkan margin kanan untuk kalkulator */
+        }
+        .clock {
+            position: absolute;
+            top: 40px;
+            right: 10px;
+            color: #fff;
+            font-size: 16px;
+            background-color: #000;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+        .date {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            color: #000;
+            font-size: 16px;
+            background-color: #fff;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+        .home-link-container {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+        }
+        .home-link {
+            color: #fff;
+            font-size: 16px;
+            text-decoration: none;
+            background-color: #333;
+            padding: 10px 20px;
+            border-radius: 5px;
+            display: inline-block; /* Tampilkan sebagai blok untuk menambahkan warna latar belakang */
+        }
+        .calculator-buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 5px;
+            margin-top: 80px; /* Menambahkan jarak dari atas untuk tombol kalkulator */
+        }
+        input[type="text"], input[type="button"] {
+            width: 100%; /* Lebar tombol dan kotak hasil diubah menjadi 100% */
+            height: 60px;
+            font-size: 24px;
+            margin: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #666;
+            color: #fff;
+        }
+        input[type="button"]:hover {
+            background-color: #555;
+        }
+        input[type="text"] {
+            background-color: #888;
+            padding-right: 10px; /* Menambahkan padding ke kanan */
+            max-width: 80%; /* Menambahkan lebar maksimum untuk kotak hasil */
+            margin-left: auto; /* Menyusun kotak hasil ke kanan */
+            margin-right: auto; /* Menyusun kotak hasil ke kiri */
+        }
+    </style>
+</head>
+<body>
+    <div class="date" id="date"></div>
+    <div class="clock" id="clock"></div>
+    <div class="calculator-container">
+        <div class="calculator">
+            <input type="text" id="display" readonly>
+            <div class="calculator-buttons">
+                <input type="button" value="7" onclick="addToDisplay('7')">
+                <input type="button" value="8" onclick="addToDisplay('8')">
+                <input type="button" value="9" onclick="addToDisplay('9')">
+                <input type="button" value="/" onclick="addToDisplay('/')">
+                <input type="button" value="4" onclick="addToDisplay('4')">
+                <input type="button" value="5" onclick="addToDisplay('5')">
+                <input type="button" value="6" onclick="addToDisplay('6')">
+                <input type="button" value="*" onclick="addToDisplay('*')">
+                <input type="button" value="1" onclick="addToDisplay('1')">
+                <input type="button" value="2" onclick="addToDisplay('2')">
+                <input type="button" value="3" onclick="addToDisplay('3')">
+                <input type="button" value="-" onclick="addToDisplay('-')">
+                <input type="button" value="0" onclick="addToDisplay('0')">
+                <input type="button" value="C" onclick="clearDisplay()">
+                <input type="button" value="=" onclick="calculate()">
+                <input type="button" value="+" onclick="addToDisplay('+')">
+            </div>
+        </div>
+        <div class="home-link-container">
+            <a class="home-link" href="index.html">Home</a>
+        </div>
+    </div>
+    <script>
+        function addToDisplay(value) {
+            document.getElementById('display').value += value;
+        }
+
+        function clearDisplay() {
+            document.getElementById('display').value = '';
+        }
+
+        function calculate() {
+            try {
+                document.getElementById('display').value = eval(document.getElementById('display').value);
+            } catch (error) {
+                document.getElementById('display').value = 'Error';
+            }
+        }
+
+        function backspace() {
+            const display = document.getElementById('display');
+            display.value = display.value.slice(0, -1);
+        }
+
+        function updateClock() {
+            const clockElement = document.getElementById('clock');
+            const currentTime = new Date();
+            const hours = currentTime.getHours().toString().padStart(2, '0');
+            const minutes = currentTime.getMinutes().toString().padStart(2, '0');
+            const seconds = currentTime.getSeconds().toString().padStart(2, '0');
+            const timeString = `${hours}:${minutes}:${seconds}`;
+            clockElement.textContent = timeString;
+        }
+
+        function updateDate() {
+            const dateElement = document.getElementById('date');
+            const currentDate = new Date();
+            const day = currentDate.getDate().toString().padStart(2, '0');
+            const month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
+            const year = currentDate.getFullYear();
+            const dateString = `Hari: ${day}/${month}/${year}`;
+            dateElement.textContent = dateString;
+        }
+
+        setInterval(updateClock, 1000); // Perbarui waktu setiap detik
+        updateClock(); // Panggil fungsi untuk menginisialisasi waktu
+        updateDate(); // Panggil fungsi untuk menginisialisasi tanggal
+    </script>
+</body>
+</html>
+
