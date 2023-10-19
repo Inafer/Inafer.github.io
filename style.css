@@ -230,20 +230,20 @@ body {
   }
  /* Animasi font */
   @keyframes textAnimation {
-    0% { color: red; }
-    25% { color: blue; }
-    50% { color: green; }
-    75% { color: yellow; }
-    100% { color: red; }
+    0% { color: #000000; }
+    25% { color: rgb(255, 255, 255); }
+    50% { color: #4aff4a; }
+    75% { color: hsl(0, 100%, 50%); }
+    100% { color: hsl(226, 100%, 50%); }
   }
 
   /* Animasi border (kelap-kelip) */
   @keyframes borderAnimation {
-    0% { border-color: red; }
-    25% { border-color: blue; }
-    50% { border-color: green; }
-    75% { border-color: yellow; }
-    100% { border-color: red; }
+    0% { color: red; }
+    25% { color: hwb(315 49% 0%); }
+    50% { color: #4aff4a; }
+    75% { color: #5900ff; }
+    100% { color: #ff9913; }
   }
 
   .navbar-brand {
